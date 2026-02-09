@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diary Entry</title>
+
+    <style>
+        body {
+            background-color: #cfe8ff; 
+            font-family: Lucida Handwriting, Cursive;
+        }
+
+        form {
+            width: 420px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+
+
+        h2 {
+            text-align: center;
+            color: #2c4c7c;
+            letter-spacing: 2px;
+        }
+
+        label {
+            font-family: "Courier New", monospace;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #9bbce0;
+            background-color: #f4f9ff;
+        }
+
+        .happy {
+            color: #f4c430; 
+            font-weight: bold;
+        }
+        .sad {
+            color: #3b6fb6; 
+            font-weight: bold;
+        }
+        .angry {
+            color: #d35400; 
+            font-weight: bold;
+        }
+        .excited {
+            color: #27ae60; 
+            font-weight: bold;
+        }
+        .love {
+            color: #e74c3c; 
+            font-weight: bold;
+        }
+        .tired {
+            color: #8e44ad;
+            font-weight: bold;
+        }
+        
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #2c4c7c;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #1f3659;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>DIARY ENTRY</h2>
+
+    <form>
+        <label>Name:</label><br>
+        <input type="text"><br><br>
+
+        <label>Date:</label><br>
+        <input type="date"><br><br>
+
+        <label>AM or PM:</label><br>
+        <input type="radio" name="time"> AM
+        <input type="radio" name="time"> PM<br><br>
+
+        <label>What are you feeling today?</label><br>
+        <input type="checkbox"> <span class="happy">HAPPY</span>
+        <input type="checkbox"> <span class="sad">SAD</span>
+        <input type="checkbox"> <span class="angry">ANGRY</span><br>
+        <input type="checkbox"> <span class="excited">EXCITED</span>
+        <input type="checkbox"> <span class="love">INLOVE</span>
+        <input type="checkbox"> <span class="tired">EXHAUSTED</span><br><br>
+
+        <label>Entry:</label><br>
+        <textarea rows="4"></textarea><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+</body>
+</html>
