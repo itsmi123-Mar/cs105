@@ -5,113 +5,106 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simple Calculator</title>
 <style>
-    body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: #f4f4f4;
-        font-family: Arial, sans-serif;
-    }
-
-    .calculator {
-        background-color: #222;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        width: 260px;
-    }
-
-    .display {
-        background-color: #444;
-        color: #fff;
-        font-size: 2em;
-        text-align: right;
-        padding: 10px;
-        border-radius: 5px;
-        margin-bottom: 10px;
-        height: 50px;
-        overflow: hidden;
-    }
-
-    .buttons {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 5px;
-    }
-
-    .buttons button {
-        padding: 15px;
-        font-size: 1.2em;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        background-color: #eee;
-        transition: background-color 0.2s;
-    }
-
-    .buttons button:hover {
-        background-color: #ddd;
-    }
-
-    .buttons .operator {
-        background-color: #ff9500;
-        color: #fff;
-    }
-
-    .buttons .operator:hover {
-        background-color: #e08900;
-    }
-
-    .buttons .equals {
-        grid-column: span 2;
-        background-color: #28a745;
-        color: #fff;
-    }
-
-    .buttons .equals:hover {
-        background-color: #218838;
-    }
-
-    .buttons .clear {
-        background-color: #dc3545;
-        color: #fff;
-    }
-
-    .buttons .clear:hover {
-        background-color: #c82333;
-    }
+    body { display:flex; justify-content:center; align-items:center; height:100vh; background:#f4f4f4; font-family:Arial,sans-serif; }
+    .calculator { background:#222; padding:20px; border-radius:10px; width:260px; box-shadow:0 4px 10px rgba(0,0,0,0.2); }
+    .display { background:#444; color:#fff; font-size:2em; text-align:right; padding:10px; border-radius:5px; margin-bottom:10px; height:50px; overflow:hidden; }
+    .buttons { display:grid; grid-template-columns:repeat(4,1fr); gap:5px; }
+    button { padding:15px; font-size:1.2em; border:none; border-radius:5px; cursor:pointer; transition:0.2s; }
+    .operator { background:#ff9500; color:#fff; }
+    .equals { background:#28a745; color:#fff; grid-column:span 2; }
+    .clear { background:#dc3545; color:#fff; }
+    button:hover { opacity:0.8; }
 </style>
-
 </head>
 <body>
+
 <div class="calculator">
-    <div class="display">0</div>
+    <div class="display" id="num">0</div>
     <div class="buttons">
         <div></div>
-        <button class="clear-all">CE</button>
-        <button class="clear">C</button>
-        <button class="operator">/</button>
+        <button class="clear" onclick="clearAll()">CE</button>
+        <button onclick="clearOne()">C</button>
+        <button class="operator" onclick="setOperator('/')">/</button>
 
-        <button>7</button>
-        <button>8</button>
-        <button>9</button>
-        <button class="operator">*</button>
+        <button onclick="addValue('7')">7</button>
+        <button onclick="addValue('8')">8</button>
+        <button onclick="addValue('9')">9</button>
+        <button class="operator" onclick="setOperator('*')">*</button>
 
-        <button>4</button>
-        <button>5</button>
-        <button>6</button>
-        <button class="operator">+</button>
+        <button onclick="addValue('4')">4</button>
+        <button onclick="addValue('5')">5</button>
+        <button onclick="addValue('6')">6</button>
+        <button class="operator" onclick="setOperator('+')">+</button>
 
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button class="operator">-</button>
-        <button>0</button>
-        <button>.</button>
-        
-        <button class="equals">=</button>
+        <button onclick="addValue('1')">1</button>
+        <button onclick="addValue('2')">2</button>
+        <button onclick="addValue('3')">3</button>
+        <button class="operator" onclick="setOperator('-')">-</button>
+
+        <button onclick="addValue('0')">0</button>
+        <button onclick="addValue('.')">.</button>
+        <button class="equals" onclick="calculate()">=</button>
     </div>
 </div>
+
+<script>
+let display = document.getElementById("num");
+let firstOperand = null;
+let operator = null;
+let resetDisplay = false;
+
+function addValue(val) {
+    if(resetDisplay) { display.innerText = "0"; resetDisplay = false; }
+    display.innerText = display.innerText === "0" ? val : display.innerText + val;
+}
+
+function setOperator(op) {
+    firstOperand = parseFloat(display.innerText);
+    operator = op;
+    resetDisplay = true; 
+}
+
+function clearAll() {
+    display.innerText = "0";
+    firstOperand = null;
+    operator = null;
+}
+
+function clearOne() {
+    display.innerText = display.innerText.slice(0,-1) || "0";
+}
+
+function calculate() {
+    if(firstOperand === null || operator === null) return;
+    let secondOperand = parseFloat(display.innerText);
+    let result;
+
+    if(operator === '+' || operator === '-') {
+        if(firstOperand >=1000 && secondOperand >=1000) { display.innerText = "CIS105"; reset(); return; }
+        result = operator === '+' ? firstOperand + secondOperand : firstOperand - secondOperand;
+    }
+    else if(operator === '*') {
+        let digits1 = String(Math.floor(firstOperand)).length;
+        let digits2 = String(Math.floor(secondOperand)).length;
+        if((digits1>2 && digits2>1) || (digits2>2 && digits1>1)) { display.innerText = "CIS105"; reset(); return; }
+        result = firstOperand * secondOperand;
+    }
+    else if(operator === '/') {
+        if(secondOperand === 0) { display.innerText = "CIS105"; reset(); return; }
+        result = firstOperand / secondOperand;
+        if(result >=1000) { display.innerText = "CIS105"; reset(); return; }
+    }
+
+    display.innerText = result;
+    reset(); 
+}
+
+function reset() {
+    firstOperand = null;
+    operator = null;
+    resetDisplay = true;
+}
+</script>
+
 </body>
 </html>
