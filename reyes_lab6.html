@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Inventory Table</title>
+    <title>Inventory System</title>
 
     <style>
         body {
             font-family: Arial;
-            padding: 20px;
             text-align: center;
         }
 
         table {
+            margin: auto;
             border-collapse: collapse;
             width: 70%;
-            margin: auto;
         }
 
         th, td {
@@ -22,19 +21,11 @@
         }
 
         th {
-            background-color: #89CFF0;         }
+            background-color: lightblue; 
+        }
 
         .out {
             color: red;
-            font-weight: bold;
-        }
-
-        .top-section {
-            margin-bottom: 20px;
-        }
-
-        input {
-            margin: 5px;
         }
     </style>
 </head>
@@ -43,56 +34,58 @@
 
     <h2>Inventory System</h2>
 
-    <div class="top-section">
+    <div>
         <input type="text" id="newItem" placeholder="Item name">
-        <input type="number" id="newPrice" placeholder="Price" step="0.01">
+        <input type="number" id="newPrice" placeholder="Price">
         <input type="number" id="newStock" placeholder="Stock">
         <button onclick="addItem()">Add Item</button>
     </div>
 
+    <br>
+
     <table>
-        <thead>
-            <tr>
-                <th>Item Name</th>
-                <th>Price</th>
-                <th>Stock</th>
-            </tr>
-        </thead>
-        <tbody id="inventoryBody">
-        </tbody>
+        <tr>
+            <th>Item Name</th>
+            <th>Price</th>
+            <th>Stock</th>
+        </tr>
+        <tbody id="inventoryBody"></tbody>
     </table>
 
     <script>
 
-        const tableBody = document.getElementById("inventoryBody");
+        const body = document.getElementById("inventoryBody");
 
         let items = [
-            { name: "Laptop", price: 30000, stock: 5 },
-            { name: "Mouse", price: 500, stock: 10 },
-            { name: "Keyboard", price: 1000, stock: 0 },
-            { name: "Monitor", price: 8000, stock: 3 },
-            { name: "Headset", price: 1500, stock: 7 }
+            {name: "Laptop", price: 30000, stock: 5},
+            {name: "Mouse", price: 500, stock: 10},
+            {name: "Keyboard", price: 1000, stock: 0},
+            {name: "Monitor", price: 8000, stock: 4},
+            {name: "Headset", price: 1500, stock: 7}
         ];
 
-        function displayItems() {
+        function showItems() {
 
-            tableBody.innerHTML = "";
+            body.innerHTML = "";
 
             for (let i = 0; i < items.length; i++) {
 
                 console.log(i);
 
-                let stockText = items[i].stock == 0 ? "<span class='out'>Out of Stock</span>" : items[i].stock;
+                let stockDisplay;
 
-                const row = `
-                    <tr>
-                        <td>${items[i].name}</td>
-                        <td>₱${items[i].price.toFixed(2)}</td>
-                        <td>${stockText}</td>
-                    </tr>
-                `;
+                if (items[i].stock == 0) {
+                    stockDisplay = "<span class='out'>Out of Stock</span>";
+                } else {
+                    stockDisplay = items[i].stock;
+                }
 
-                tableBody.innerHTML += row;
+                body.innerHTML +=
+                "<tr>" +
+                "<td>" + items[i].name + "</td>" +
+                "<td>₱" + items[i].price.toFixed(2) + "</td>" +
+                "<td>" + stockDisplay + "</td>" +
+                "</tr>";
             }
         }
 
@@ -107,20 +100,25 @@
                 return;
             }
 
+            if (Number(stock) < 0) {
+                alert("Negative stock is not allowed");
+                return;
+            }
+
             items.push({
                 name: name,
                 price: Number(price),
                 stock: Number(stock)
             });
 
-            displayItems();
+            showItems();
 
             document.getElementById("newItem").value = "";
             document.getElementById("newPrice").value = "";
             document.getElementById("newStock").value = "";
         }
 
-        displayItems();
+        showItems();
 
     </script>
 
