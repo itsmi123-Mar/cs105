@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inventory System</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin: 0;
+        }
+        header {
+            background-color: #add8e6;
+            padding: 20px;
+        }
+        header h1 {
+            margin: 20px 20px 20px 20px;
+        }
+        button.actionBtn {
+            padding: 10px 15px;
+            margin: 5px;
+        }
+        .form-container {
+            margin: 20px;
+        }
+        .form-container input {
+            padding: 5px;
+            margin: 0 5px;
+        }
+        table {
+            margin: auto;
+            border-collapse: collapse;
+            width: 70%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+        th {
+            background-color: #add8e6;
+        }
+        .out {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Inventory System</h1>
+    <button class="actionBtn" id="addBtn">Add Product</button>
+    <button class="actionBtn" id="buyBtn">Buy Product</button>
+</header>
+
+<div class="form-container" id="addForm">
+    <input type="text" id="newItem" placeholder="Item name">
+    <input type="number" id="newPrice" placeholder="Price">
+    <input type="number" id="newStock" placeholder="Stock / Quantity">
+    <button id="submitAdd" onclick = "addItem()">Submit</button>
+</div>
+
+<div class="form-container" id="buyForm" style="display:none;">
+    <input type="text" id="buyItemName" placeholder="Item name">
+    <input type="number" id="buyQuantity" placeholder="Quantity">
+    <button id="submitBuy" onclick = "buyItem()">Submit</button>
+</div>
+
+<table>
+    <tr>
+        <th>Item Name</th>
+        <th>Price</th>
+        <th>Stock</th>
+    </tr>
+    <tbody id="inventoryBody"></tbody>
+</table>
+
+<script>
+
+class InventoryItem {
+    constructor(name, price, stock) {
+        this.name = name;
+        this.price = price;
+        this.stock = stock;
+    }
+}
+
+const narray=[new InventoryItem("Laptop", 12000, 23), 
+	      new InventoryItem("Phone", 3200, 0), 
+	      new InventoryItem("USB", 1500, 2), 
+              new InventoryItem("Keyboard", 1000, 17),
+	      new InventoryItem("Charger", 600, 23)]
+
+
+const body = document.getElementById("inventoryBody");
+
+    function renderInventory() {
+body.innerHTML='' 
+        narray.forEach(item => {
+            let row = body.insertRow();
+            row.insertCell(0).innerText = item.name;
+            row.insertCell(1).innerText = `₱${item.price.toFixed(2)}`;
+            row.insertCell(2).innerHTML = item.stock === 0 ? "<span class='out'>Out of Stock</span>" : item.stock;
+        });
+    }
+
+renderInventory()
+
+function addItem(){
+const NewItem = document.getElementById("newItem").value;
+const Price = parseFloat(document.getElementById("newPrice").value);
+const Stock = parseInt(document.getElementById("newStock").value);
+console.log(Price,Stock);
+narray.push(new InventoryItem(NewItem,Price,Stock))
+renderInventory()
+}
+
+function buyItem() {
+    const itemName = document.getElementById("buyItemName").value;
+    const quantity = parseInt(document.getElementById("buyQuantity").value);
+    const item = narray.find(i => i.name === itemName);
+
+    if (!item) {
+        alert("No product found with that name!");
+        return;
+    }
+    if (quantity > item.stock) {
+        alert("Requested quantity exceeds available stock!");
+        return;
+    }
+    item.stock -= quantity;
+    alert('Purchase successful!');
+    renderInventory();
+}
+
+const addBtn = document.getElementById("addBtn");
+const buyBtn = document.getElementById("buyBtn");
+const addForm = document.getElementById("addForm");
+const buyForm = document.getElementById("buyForm");
+
+addBtn.onclick = function() {
+    addForm.style.display = "block";
+    buyForm.style.display = "none";
+}
+
+buyBtn.onclick = function() {
+    buyForm.style.display = "block";
+    addForm.style.display = "none";
+}
+
+</script>
+
+</body>
+</html>
