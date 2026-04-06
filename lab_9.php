@@ -156,19 +156,23 @@
             </div>
 
             <div class="card full-width">
-                <h2>📚 Menu Price List</h2>
-                <div class="menu-grid">
-			<?php
-			foreach ($pizzaMenu as $name => $price) {
-			    echo "<div class='menu-item'>$name <br> ₱$price</div>";
-			}
+		    <h2>📚 Menu Price List</h2>
+		    <div class="menu-grid">
+		        <h3 style="grid-column: 1 / -1; color:#FF6B6B;">🍕 Pizzas</h3>
+ 			       <?php
+			           foreach ($pizzaMenu as $name => $price) {
+ 			               echo "<div class='menu-item'>$name <br>₱$price</div>";
+        			   }
+                                 ?>
 
-			foreach ($toppingsMenu as $name => $price) {
-			    echo "<div class='menu-item'>$name <br> ₱$price</div>";
-			}
-			?>
-                    </div>
-            </div>
+        		 <h3 style="grid-column: 1 / -1; color:#FFA500;">🥗 Toppings</h3>
+        			<?php
+        			    foreach ($toppingsMenu as $name => $price) {
+            				echo "<div class='menu-item'>$name <br>₱$price</div>";
+        			    }
+        			?>
+   		     </div>
+		</div>
 
             <div class="card full-width order-counter">
                 <h2>🎯 Order Counter</h2>
