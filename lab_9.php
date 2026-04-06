@@ -55,6 +55,21 @@
         ];
         
         // TODO: 1. Define your computePizzaTotal Function here
+
+        function computePizzaTotal($pizzaPrice, $toppings, $toppingsMenu, $quantity) {
+            $total = $pizzaPrice;
+
+            if (!empty($toppings)) {
+                foreach ($toppings as $topping) {
+                    if (isset($toppingsMenu[$topping])) {
+                        $total += $toppingsMenu[$topping];
+                    }
+                }
+            }
+            $total = $total * $quantity;
+
+            return $total;
+        }
     ?>
 
     <div class="container">
@@ -74,12 +89,28 @@
 
                     <div class="form-group">
                         <label>Select Your Pizza</label>
+			<?php
+			foreach ($pizzaMenu as $name => $price) {
+			    echo "<label>
+			    <input type='radio' name='pizza' value='$name'> $name - ₱$price 
+			    </label><br>";
+
+			}
+			?>
                         <div class="radio-group">
                             </div>
                     </div>
 
                     <div class="form-group">
                         <label>Add Toppings</label>
+			<?php
+			foreach ($toppingsMenu as $name => $price) {
+			    echo "<label>
+			    <input type='checkbox' name='toppings[]' value='$name'> $name - ₱$price <br>
+			    </label><br>";
+			}
+			?>
+
                         <div class="checkbox-group">
                             </div>
                     </div>
@@ -98,7 +129,25 @@
                 <?php
                     if (isset($_POST['order'])) {
                         // TODO: 4. Capture Form Data
-                        // TODO: 5. Call function and calculate Grand Total
+            $customer = $_POST['customer'];
+            $pizza = $_POST['pizza'];
+            $toppings = $_POST['toppings'] ?? [];
+            $quantity = $_POST['qty'];
+            $pizzaPrice = $pizzaMenu[$pizza];
+
+            $total = computePizzaTotal($pizzaPrice, $toppings, $toppingsMenu, $quantity);
+			
+			// TODO: 5. Call function and calculate Grand Total
+            echo "<div class='summary-item'> <span> Name: </span><span>$customer</span></div>";
+            echo "<div class='summary-item'> <span> Pizza: </span><span>$pizza</span></div>";
+            echo "<div class='summary-item'> <span> Quantity: </span><span>$quantity</span></div>";
+
+            echo "<div class='summary-item'> <span> Toppings: </span><span>";
+            echo empty($toppings) ? "None" : implode(", ", $toppings);
+            echo "</span></div>";
+
+            echo "<div class='total'> Total: Php$total </div>";
+
                         // TODO: 6. Display Results
                     } else {
                         echo "<p style='text-align: center; color: #999;'>Place an order to see summary</p>";
@@ -109,6 +158,15 @@
             <div class="card full-width">
                 <h2>📚 Menu Price List</h2>
                 <div class="menu-grid">
+			<?php
+			foreach ($pizzaMenu as $name => $price) {
+			    echo "<div class='menu-item'>$name <br> ₱$price</div>";
+			}
+
+			foreach ($toppingsMenu as $name => $price) {
+			    echo "<div class='menu-item'>$name <br> ₱$price</div>";
+			}
+			?>
                     </div>
             </div>
 
@@ -116,7 +174,7 @@
                 <h2>🎯 Order Counter</h2>
                 <?php
                     if (isset($_POST['order'])) {
-                        // TODO: 8. Use a FOR loop to display the order line based on Quantity
+                        // TODO: 8. Use a FOR loop to display the order line based on Quantity		
                     }
                 ?>
             </div>
