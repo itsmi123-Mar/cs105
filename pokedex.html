@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pokedex</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#07172b;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:'Press Start 2P', monospace;
+}
+
+.pokedex{
+    width:780px;
+    height:520px;
+    display:flex;
+}
+
+/* LEFT PANEL */
+
+.left-panel{
+    width:370px;
+    background:#d60000;
+    border-radius:35px 0 0 35px;
+    border:5px solid #870000;
+    padding:18px;
+    position:relative;
+}
+
+/* TOP */
+
+.top-area{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+}
+
+.big-light{
+    width:62px;
+    height:62px;
+    border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, #9ffcff, #00a2ff);
+    border:5px solid white;
+    box-shadow:0 0 8px #00d5ff;
+}
+
+.top-right{
+    flex:1;
+}
+
+.small-lights{
+    display:flex;
+    gap:8px;
+    margin-bottom:8px;
+}
+
+.small-light{
+    width:18px;
+    height:18px;
+    border-radius:50%;
+}
+
+.red{
+    background:#ff3a3a;
+    border:2px solid #9d0000;
+}
+
+.yellow{
+    background:#fff04d;
+    border:2px solid #a18400;
+}
+
+.green{
+    background:#77ff55;
+    border:2px solid #008000;
+}
+
+/* SEARCH */
+
+.search-area{
+    display:flex;
+    gap:5px;
+}
+
+.search-input{
+    width:150px;
+    padding:6px;
+    border:3px solid black;
+    background:white;
+    font-size:8px;
+    font-family:'Press Start 2P', monospace;
+}
+
+.search-btn{
+    padding:6px 10px;
+    border:3px solid black;
+    background:#b30000;
+    color:white;
+    font-size:8px;
+    font-family:'Press Start 2P', monospace;
+    cursor:pointer;
+}
+
+.curve-line{
+    width:200px;
+    height:40px;
+    border-bottom:5px solid #8a0000;
+    border-radius:0 0 100px 0;
+    margin-top:4px;
+}
+
+/* SCREEN AREA */
+
+.screen-box{
+    width:295px;
+    height:255px;
+    background:#d6d6d6;
+    border-radius:15px;
+    margin-top:18px;
+    padding:18px;
+    position:relative;
+}
+
+.screen-dots{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.screen-dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:#b00000;
+}
+
+.main-screen{
+    width:100%;
+    height:175px;
+    background:#f5f5f5;
+    border:4px solid #666;
+    border-radius:18px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#b0b0b0;
+    font-size:10px;
+}
+
+.small-red-light{
+    width:28px;
+    height:28px;
+    background:#b30000;
+    border-radius:50%;
+    position:absolute;
+    bottom:18px;
+    left:20px;
+}
+
+/* SPEAKER */
+
+.speaker{
+    position:absolute;
+    right:20px;
+    bottom:16px;
+}
+
+.speaker-line{
+    width:65px;
+    height:4px;
+    background:#666;
+    margin-top:6px;
+}
+
+/* BOTTOM */
+
+.bottom-controls{
+    margin-top:22px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.blue-btn{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:linear-gradient(#4ea2ff,#004cff);
+    border:2px solid #0022aa;
+}
+
+.green-btn{
+    width:52px;
+    height:16px;
+    border-radius:10px;
+    background:linear-gradient(#6cff4d,#179400);
+}
+
+.orange-btn{
+    width:52px;
+    height:16px;
+    border-radius:10px;
+    background:linear-gradient(#ff9944,#d64d00);
+}
+
+/* DPAD */
+
+.dpad{
+    width:92px;
+    height:92px;
+    position:relative;
+    margin-left:auto;
+}
+
+.dpad-v{
+    width:30px;
+    height:92px;
+    background:#111;
+    position:absolute;
+    left:31px;
+    border-radius:5px;
+}
+
+.dpad-h{
+    width:92px;
+    height:30px;
+    background:#111;
+    position:absolute;
+    top:31px;
+    border-radius:5px;
+}
+
+.dpad-center{
+    width:25px;
+    height:25px;
+    background:#000;
+    position:absolute;
+    top:33px;
+    left:33px;
+}
+
+/* CENTER */
+
+.middle{
+    width:35px;
+    background:#b80000;
+    border-top:5px solid #870000;
+    border-bottom:5px solid #870000;
+    position:relative;
+}
+
+.middle::before,
+.middle::after{
+    content:'';
+    width:100%;
+    height:18px;
+    background:#c40000;
+    position:absolute;
+    left:0;
+}
+
+.middle::before{
+    top:120px;
+}
+
+.middle::after{
+    top:250px;
+}
+
+/* RIGHT PANEL */
+
+.right-panel{
+    width:375px;
+    background:#d60000;
+    border-radius:0 35px 35px 0;
+    border:5px solid #870000;
+    border-left:none;
+    padding:20px;
+    position:relative;
+}
+
+.white-top{
+    width:100%;
+    height:75px;
+    background:#f5f5f5;
+    position:absolute;
+    top:0;
+    right:0;
+    border-radius:0 0 0 90px;
+}
+
+/* GREEN SCREEN */
+
+.right-screen{
+    width:280px;
+    height:130px;
+    background:#35ff00;
+    border-radius:12px;
+    margin-top:105px;
+    margin-left:25px;
+    box-shadow:0 0 20px #00ff00;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#114400;
+    font-size:10px;
+}
+
+/* BUTTONS */
+
+.number-buttons{
+    margin-top:38px;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:10px;
+}
+
+.num-btn{
+    height:36px;
+    border:none;
+    border-radius:8px;
+    background:linear-gradient(#4ea2ff,#004cff);
+}
+
+/* STATUS */
+
+.status-row{
+    margin-top:18px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.small-orange{
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:#ff9d00;
+}
+
+.small-green{
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:#00dd00;
+}
+
+.long-green{
+    width:60px;
+    height:16px;
+    border-radius:10px;
+    background:linear-gradient(#6cff4d,#179400);
+    margin-left:auto;
+}
+
+.long-orange{
+    width:60px;
+    height:16px;
+    border-radius:10px;
+    background:linear-gradient(#ff9944,#d64d00);
+}
+
+/* YELLOW BUTTONS */
+
+.action-buttons{
+    margin-top:25px;
+    display:flex;
+    gap:20px;
+}
+
+.action-btn{
+    width:130px;
+    height:70px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(#ffff77,#ffe100);
+}
+</style>
+</head>
+
+<body>
+
+<div class="pokedex">
+
+    <!-- LEFT -->
+
+    <div class="left-panel">
+
+        <div class="top-area">
+
+            <div class="big-light"></div>
+
+            <div class="top-right">
+
+                <div class="small-lights">
+                    <div class="small-light red"></div>
+                    <div class="small-light yellow"></div>
+                    <div class="small-light green"></div>
+                </div>
+
+                <div class="search-area">
+                    <input type="text" class="search-input" placeholder="SEARCH...">
+                    <button class="search-btn">Search</button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="curve-line"></div>
+
+        <div class="screen-box">
+
+            <div class="screen-dots">
+                <div class="screen-dot"></div>
+                <div class="screen-dot"></div>
+            </div>
+
+            <div class="main-screen">
+                READY...
+            </div>
+
+            <div class="small-red-light"></div>
+
+            <div class="speaker">
+                <div class="speaker-line"></div>
+                <div class="speaker-line"></div>
+                <div class="speaker-line"></div>
+                <div class="speaker-line"></div>
+            </div>
+
+        </div>
+
+        <div class="bottom-controls">
+
+            <div class="blue-btn"></div>
+
+            <div class="green-btn"></div>
+
+            <div class="orange-btn"></div>
+
+            <div class="dpad">
+                <div class="dpad-v"></div>
+                <div class="dpad-h"></div>
+                <div class="dpad-center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- CENTER -->
+
+    <div class="middle"></div>
+
+    <!-- RIGHT -->
+
+    <div class="right-panel">
+
+        <div class="white-top"></div>
+
+        <div class="right-screen">
+            WAITING FOR INPUT...
+        </div>
+
+        <div class="number-buttons">
+
+            <button class="num-btn"></button>
+            <button class="num-btn"></button>
+            <button class="num-btn"></button>
+            <button class="num-btn"></button>
+            <button class="num-btn"></button>
+
+            <button class="num-btn"></button>
+            <button class="num-btn"></button>
+            <button class="num-btn"></button>
+            <button class="num-btn"></button>
+            <button class="num-btn"></button>
+
+        </div>
+
+        <div class="status-row">
+
+            <div class="small-orange"></div>
+            <div class="small-green"></div>
+
+            <div class="long-green"></div>
+            <div class="long-orange"></div>
+
+        </div>
+
+        <div class="action-buttons">
+            <button class="action-btn"></button>
+            <button class="action-btn"></button>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
